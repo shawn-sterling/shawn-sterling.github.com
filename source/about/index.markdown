@@ -2,7 +2,7 @@
 layout: page
 title: "about"
 date: 2012-10-15 01:02
-comments: true
+comments: false
 sharing: true
 footer: true
 ---

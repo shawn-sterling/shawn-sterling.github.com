@@ -3,7 +3,7 @@ layout: post
 title: "An analysis on dell's dset tool"
 date: 2012-10-16 22:26
 comments: true
-categories: 
+categories: sysadmin dell
 ---
 
 what is dset?
