@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://www.systemtemplar.org
+url: http://shawn-sterling.github.com
 title: system templar 
 subtitle: a senior sysadmin's blog on /dev/random
 author: shawn sterling
@@ -89,7 +89,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
+disqus_short_name: systemtemplar
 disqus_show_comment_count: false
 
 # Google Analytics
