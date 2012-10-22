@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>system templar</title>
+  <title>An analysis on dell's dset tool - system templar</title>
   <meta name="author" content="shawn sterling">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://shawn-sterling.github.com/">
+  <link rel="canonical" href="http://shawn-sterling.github.com/blog/2012/10/16/dells-dset-an-analysis/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -84,16 +84,13 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/16/dells-dset-an-analysis/">An Analysis on Dell&#8217;s Dset Tool</a></h1>
+      
+        <h1 class="entry-title">An Analysis on Dell's Dset Tool</h1>
       
     
     
@@ -117,7 +114,7 @@
   </header>
 
 
-  <div class="entry-content"><p>what is dset?</p>
+<div class="entry-content"><p>what is dset?</p>
 
 <p>DSET is &#8220;Dell System E-Support Tool&#8221;, it is available for windows, 32bit linux and 64 bit linux. Essentially dell uses this tool to gather information about your server to help them troubleshoot. I&#8217;m only writing about the 64 bit linux version.</p>
 
@@ -414,24 +411,16 @@ connected usb devices
 
 <p>don&#8217;t run dset. If you absolutely must use dset, use the privacy option.</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/14/test-goes-here/">Well Hullo There.</a></h1>
+  
+
+<span class="byline author vcard">Posted by <span class="fn">shawn sterling</span></span>
+
       
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -443,29 +432,44 @@ connected usb devices
   
 
 
-<time datetime="2012-10-14T23:35:00-07:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
-        
-      </p>
+<time datetime="2012-10-16T22:26:00-07:00" pubdate data-updated="true">Oct 16<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/dell/'>dell</a>, <a class='category' href='/blog/categories/sysadmin/'>sysadmin</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>Oh Hai.</p>
-
-<p>I decided that I may have a thing or two to post about, it may be (read: will be) very infrequent, but such is life.</p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://shawn-sterling.github.com/blog/2012/10/16/dells-dset-an-analysis/" data-via="" data-counturl="http://shawn-sterling.github.com/blog/2012/10/16/dells-dset-an-analysis/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2012/10/14/test-goes-here/" title="Previous Post: Well Hullo there.">&laquo; Well Hullo there.</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -473,7 +477,7 @@ connected usb devices
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2012/10/16/dells-dset-an-analysis/">An analysis on dell&#8217;s dset tool</a>
+        <a href="/blog/2012/10/16/dells-dset-an-analysis/">An analysis on dell's dset tool</a>
       </li>
     
       <li class="post">
@@ -486,7 +490,7 @@ connected usb devices
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/shawn-sterling">@shawn-sterling</a> on GitHub
@@ -520,6 +524,7 @@ connected usb devices
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -534,7 +539,10 @@ connected usb devices
       var disqus_shortname = 'systemtemplar';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://shawn-sterling.github.com/blog/2012/10/16/dells-dset-an-analysis/';
+        var disqus_url = 'http://shawn-sterling.github.com/blog/2012/10/16/dells-dset-an-analysis/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
