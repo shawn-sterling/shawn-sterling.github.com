@@ -4,7 +4,7 @@
   <title><![CDATA[system templar]]></title>
   <link href="http://shawn-sterling.github.com/atom.xml" rel="self"/>
   <link href="http://shawn-sterling.github.com/"/>
-  <updated>2012-12-17T00:52:44-08:00</updated>
+  <updated>2013-02-17T23:42:57-08:00</updated>
   <id>http://shawn-sterling.github.com/</id>
   <author>
     <name><![CDATA[shawn sterling]]></name>
@@ -12,6 +12,710 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Fedora 18 Desktop ready]]></title>
+    <link href="http://shawn-sterling.github.com/blog/2013/02/12/fedora-18-installation-notes/"/>
+    <updated>2013-02-12T00:15:00-08:00</updated>
+    <id>http://shawn-sterling.github.com/blog/2013/02/12/fedora-18-installation-notes</id>
+    <content type="html"><![CDATA[<h3>Upgreyedd</h3>
+
+<p>First and foremost, I am not a fan of <a href="http://fedoraproject.org/wiki/FedUp">FedUp</a></p>
+
+<p>My luck hasn&#8217;t been good with it, but I do some stuff that is off the beaten
+path, so it is likely my fault. I am fortunate enough to have extra hard drives
+kicking around so install a OS on a spare hard drive to test out it&#8217;s
+installation is no problem for me. However in this case I have a shiny new PC
+to setup.</p>
+
+<p>The new PC is ASUS P9X79LE, w/32 gigs of ram, and a 3.6 ghz proc.</p>
+
+<h3>Why use Fedora?</h3>
+
+<p>I use fedora because I work at a CentOS shop, and using fedora keeps me fresh
+on what changes are coming to the RHEL ecosystem. There are quite a few big
+changes coming in the RHEL pipeline so it&#8217;s just a good way of seeing what is
+on it&#8217;s way and gives me a chance to explore how the new stuff works.</p>
+
+<h3>Installation</h3>
+
+<p>Anaconda (The fedora gui installer) has been completely re-written, and was
+(at least partly) responsible for the delays in getting fedora 18 released.</p>
+
+<p>The new gui looks nice, but I have some complaints. Currently when you select
+the encryption option it encrypts the entire physical volume, rather then
+encrypted the logical volume. This means, that it&#8217;s encrypting the whole hard
+drive instead of just a particular partition.</p>
+
+<p>Typically in my linux installations I setup a /home partition and encrypt it
+using luks. The previous version of anaconda this was easy to do. I have
+commented on a <a href="https://bugzilla.redhat.com/show_bug.cgi?id=880876">bug report</a>
+about this.</p>
+
+<p>I setup my /home partition unencrypted at installation time, so I will fix this
+later in this writeup.</p>
+
+<h3>Dual Booting with UEFI</h3>
+
+<p>I have used UEFI bios many times in a server environment, but this is my first PC with a UEFI
+bios at home. One of the fun parts is, you don&#8217;t need to worry about windows
+over writing grub anymore (or grub forgetting to add the windows partition(s)).
+With a UEFI bios you pick which drive you are going to boot with using the bios
+menu. NOTE: I still have a windows partition for the occasional video game that
+I can&#8217;t get working with wine.</p>
+
+<p>My motherboard is a Asus P9X79 LE, and the original bios version did not work
+with the F8 boot menu. If I selected the UEFI boot order in the bios itself it
+would work, but if I hit F8, it would not boot off any other drive. I did a
+BIOS update and that solved the problem.</p>
+
+<h3>Speaking of Bios Updates</h3>
+
+<p>I usually do BIOS updates using the windows boot disks, because generally
+speaking vendors test the windows portions more than the linux ones. So I saved
+the bios upgrade to c:\bios on my windows partition, loaded the asus EZ flash,
+navigated to the bios file, and it failed saying that the bios wasn&#8217;t a EFI
+bios.</p>
+
+<p>After some googling I found that the EZ flash is able the navigate ntfs folders
+but can&#8217;t load bios files from ntfs (which is really odd). So I copied the bios
+file to /boot/efi on my linux partition (which is a VFAT partition iirc) and
+fired up the EZ flash again and it was able to find and use the bios upgrade
+just fine.</p>
+
+<p>After the bios upgrade I am able to use the F8 bios boot menu just fine.</p>
+
+<h3>Post Installation</h3>
+
+<p>I like to record my steps on what I do after installing so I can come back if I
+ever need to.</p>
+
+<p>First the bare essentials:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum install vim gvim tmux terminator xchat pidgin git thunderbird wget curl</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>I will do a whole blog post on my vim setup on a much later date.
+tmux is a screen replacement that is awesome.
+terminator is a graphical terminal that is also awesome.
+xchat for gui irc
+pidgin for instant messaging
+thunderbird for email
+git for source control
+and wget and curl for pure utility
+</code></pre>
+
+<p>Next Disable evil bash search prompt:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo 'unset command_not_found_handle' >> ~/.bashrc && source ~/.bashrc</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is the thing that searches for typos when you typo. it slows things down
+far to much for fast typers. I have a fancy .bashrc that I&#8217;ll talk
+about some other time.</p>
+
+<p>NOTE: Before the zsh people get on my case about not switching to zsh, it&#8217;s not
+something I&#8217;m ready to deploy on all my work servers, so I&#8217;m sticking with bash
+until I can deploy zsh everywhere I work.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum update</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Boot settings</h3>
+
+<p><strong>fstab</strong></p>
+
+<p>NOTE: Don&#8217;t mess around with your fstab unless you know what you are doing.</p>
+
+<p>I have a ssd disk, so I need to add the &#8216;discard&#8217; option to the fstab for
+the partitions that are ssd backed.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>old:
+</span><span class='line'>/dev/mapper/vg_shinix-lv_root /     ext4      defaults        1 1
+</span><span class='line'>
+</span><span class='line'>new:
+</span><span class='line'>/dev/mapper/vg_shinix-lv_root /     ext4      discard,defaults        1 1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>but do that for each partition that is ssd, though not on the luks partition as
+that would be foolish (iirc luks partitions ignore the discard option).</p>
+
+<p><strong>grub</strong></p>
+
+<p>NOTE: Don&#8217;t play with your grub settings unless you know what you are doing.</p>
+
+<p>Being that I have a ssd drive, I will want elevator=noop for my scheduler, and
+I am not a fan of the graphical boot so I will disable that via removing the
+rhgb and quiet options.</p>
+
+<p>I will also be using the nvidia driver, so I will disable the nouveau kernel
+module via rdblacklist=nouveau</p>
+
+<p>If you haven&#8217;t used grub2 yet it might be a little jarring of an experience.
+Rather than the simple vi /boot/grub/grub.conf, you now get to:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>modify:
+</span><span class='line'>/etc/defaults/grub
+</span><span class='line'>then
+</span><span class='line'>grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+</span><span class='line'>(or grub2-mkconfig -o /boot/grub2/grub.cfg and use a symlink).</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you think the old way is better you are not alone, but if you look at the
+mess that is your new grub.cfg you will be happy for the cfg generator.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vi /etc/defaults/grub
+</span><span class='line'>+ elevator=noop rdblacklist=nouveau
+</span><span class='line'>- rhgb quiet
+</span><span class='line'>grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg</span></code></pre></td></tr></table></div></figure>
+
+
+<p>reboot
+(actually reboot cuz you have installed a new kernel and nvidia instructions
+require you to be on the new kernel)</p>
+
+<p><strong>Nvidia Drivers</strong></p>
+
+<p>I have a fancy video card (Geforce GTX 660ti) and I plan on trying out steam
+for linux, so I need to get the nvidia drivers going.</p>
+
+<p>The instructions I found on <a href="http://www.forums.fedoraforum.org/">fedoraforum</a> will work, but require a bit of
+tinkering.</p>
+
+<p>NOTE: I am following the instructions <a href="http://forums.fedoraforum.org/showthread.php?t=280750">here</a></p>
+
+<p>but due to a <a href="https://bugzilla.redhat.com/show_bug.cgi?id=873220">bug</a> added &#8220;-o nouveau&#8221; to the dracut option.</p>
+
+<p>so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dracut -o nouveau /boot/initramfs-$(uname -r).img /boot/$(uname -r)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Upon rebooting my system would crash. This was
+annoying. So I did a rescue, and changed to boot to runlevel 3 (no gui).</p>
+
+<p>After a reboot, I checked a &#8220;lsmod |egrep &#8216;nouv|nv&#8217;&#8221; to see what drivers I was
+loading. There was no nvidia, and no nouveau. So the blacklist/dracut was working but
+I wasn&#8217;t loading the nvidia kernel module either. A manual modprobe resulted
+in:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>modprobe nvidia
+</span><span class='line'>ERROR: could not insert 'nvidia': Required key not available</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So what key are we talking about here? Let&#8217;s get an strace going:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>open("/lib/modules/3.7.2-204.fc18.x86_64/extra/nvidia/nvidia.ko", O_RDONLY|O_CLOEXEC) = 3
+</span><span class='line'>read(3, "\177ELF\2\1", 6)               = 6
+</span><span class='line'>lseek(3, 0, SEEK_SET)                   = 0
+</span><span class='line'>fstat(3, {st_mode=S_IFREG|0644, st_size=15202848, ...}) = 0
+</span><span class='line'>mmap(NULL, 15202848, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe78915b000
+</span><span class='line'>init_module(0x7fe78915b000, 15202848, "") = -1 ENOKEY (Required key not available)
+</span><span class='line'>munmap(0x7fe78915b000, 15202848)        = 0
+</span><span class='line'>close(3)                                = 0
+</span><span class='line'>write(2, "ERROR: could not insert 'nvidia'"..., 61ERROR: could not insert 'nvidia': Required key not available
+</span><span class='line'>) = 61
+</span><span class='line'>munmap(0x7fe78a0c8000, 324765)          = 0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;ve had some experience with signed modules before, but it was a long time
+ago. Hrm</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>readelf -S /lib/modules/3.7.2-204.fc18.x86_64/extra/nvidia/nvidia.ko |grep -i sig
+</span><span class='line'>(nothing returned)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>no signature. This must be something else.</p>
+
+<p>I tried booting with the kernel option:</p>
+
+<p>enforcemodulesig=0 and module.sig_enforce=no, neither worked.</p>
+
+<p>After a lot of googling, I found that the issue was with <a href="https://fedoraproject.org/wiki/Secureboot">secure boot</a>
+as soon as I turned it off (in the bios settings), I was able to load the nvidia module fine. There is
+surprisingly little documentation on the internets about this error.</p>
+
+<p>I posted <a href="http://www.forums.fedoraforum.org/showthread.php?p=1633893#post1633893">this</a>
+in hopes to save someone else some time (It took longer than I would have liked to
+figure it out).</p>
+
+<h3>Desktop</h3>
+
+<p>I have been using cinnamon or frippery (cinnamon on the laptop, frippery on the
+desktop) since fedora 15 came out (because gnome2 was ditched). Fedora 18 has
+MATE which is the gnome2 fork. I&#8217;m really looking forward to using my old
+desktop again.</p>
+
+<p>MATE:</p>
+
+<p>Ahh MATE, I used Gnome2 as my desktop for many years, so this was a big sigh of
+relief. Even though I am going crazy daily due to
+<a href="https://github.com/mate-desktop/mate-control-center/issues/25">a keyboard shortcut bug</a>
+I am loving using mate. As far as moving windows from
+monitor to monitor (I have a 3 monitor setup) mate works a lot smoother than
+everything else I have used so far. Mate has been available in other versions
+of fedora, I just totally missed the boat on it.</p>
+
+<p>The other issue I have with fedora&#8217;s installation of mate, is that it doesn&#8217;t
+install the mate-screensaver rpm. I
+<a href="https://bugzilla.redhat.com/show_bug.cgi?id=911015">opened a bug report on this</a>
+so hopefully it will be fixed soon.</p>
+
+<p>To get MATE installed after installation do a :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum groupinstall "MATE Desktop"
+</span><span class='line'>yum install mate-screensaver</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Setup encrypted home partition</h3>
+
+<p>Lets get our /home partition encrypted.</p>
+
+<p>WARNING: If you make a mistake here, you&#8217;re going to have a bad time! Don&#8217;t
+blame me. Back your stuff up.</p>
+
+<p>My home partition is it&#8217;s own logical volume, if you have anything at all
+different setup these instructions are not for you!</p>
+
+<p>Steps:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1. hit ctrl-alt-f2, login as root, and type 'init 1'
+</span><span class='line'>2. mkdir /homebackup
+</span><span class='line'>3. rsync -av /home/ /homebackup
+</span><span class='line'>4. umount /home
+</span><span class='line'>5. lvdisplay (find your logical volume name mine is lv_home, find your volume
+</span><span class='line'>   group name, mine is vg_shinix)
+</span><span class='line'>6. cryptsetup --verbose --verify-passphrase luksFormat /dev/vg_shinix/lv_home
+</span><span class='line'>7. cryptsetup luksOpen /dev/vg_shinix/lv_home home
+</span><span class='line'>8. mkfs.ext4 /dev/mapper/home
+</span><span class='line'>9. mount /dev/mapper/home /home
+</span><span class='line'>10. rsync -av /homebackup/ /home/
+</span><span class='line'>11. restorecon -v -R /home
+</span><span class='line'>12. cryptsetup luksUUID /dev/vg_shinix/lv_home >> /etc/crypttab
+</span><span class='line'>13. vi /etc/crypttab
+</span><span class='line'>Your crypttab will have 1 UUID sitting there
+</span><span class='line'>ie:
+</span><span class='line'>37ff7165-31c0-4863-aba8-876692e6bc67
+</span><span class='line'>
+</span><span class='line'>You need to take that uuid and add "luks-" then add a space "UUID=" the same
+</span><span class='line'>uuid again, space none. It should look like this when you are done:
+</span><span class='line'>
+</span><span class='line'>luks-37ff7165-31c0-4863-aba8-876692e6bc67 UUID=37ff7165-31c0-4863-aba8-876692e6bc67 none
+</span><span class='line'>
+</span><span class='line'>NOTE: i know the luks-string can be anything you want, this is keeping it like previous
+</span><span class='line'>versions of fedora, and I like consistency.
+</span><span class='line'>
+</span><span class='line'>14. vi /etc/fstab
+</span><span class='line'>
+</span><span class='line'>find your old /home entry, copy and paste it, comment out the orig.
+</span><span class='line'>
+</span><span class='line'>#/dev/mapper/vg_shinix-lv_home /home                   ext4    defaults 1 2
+</span><span class='line'>
+</span><span class='line'>modify the new one to point at luks-(the same uuid as before) so:
+</span><span class='line'>
+</span><span class='line'>/dev/mapper/luks-37ff7165-31c0-4863-aba8-876692e6bc67    /home                   ext4    defaults 1 2
+</span><span class='line'>
+</span><span class='line'>reboot to make sure it comes up on boot.
+</span><span class='line'>
+</span><span class='line'>NOTE: if you have disabled graphical booting as I have, the password prompt
+</span><span class='line'>DOES show up, but due to the nature of systemd running many things at a time,
+</span><span class='line'>it scrolls by super fast, and is sitting waiting for your input. Hit backspace
+</span><span class='line'>once and the password prompt will appear.</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Disabling services</h3>
+
+<p>Gone are the days of chkconfig &#8211;list, we need to use systemctl. Skipping over
+a debate about systemctl, let&#8217;s move right into how to get going with it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>systemctl list-unit-files --type=service</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You will see a nice color coded list of your services that are set to
+enabled, disabled, or static. If a service is &#8216;static&#8217; that means it&#8217;s a
+dependency of another service. For now, ignore static services and concentrate
+on enabled services.</p>
+
+<p>Let&#8217;s figure out what all this stuff is.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#if you type
+</span><span class='line'>systemctl
+</span><span class='line'>#you will get short description of what everything is, you can work with just
+</span><span class='line'>#that no problem.
+</span><span class='line'>
+</span><span class='line'>#I like to see what rpm the services come from, here's how I do that:
+</span><span class='line'>
+</span><span class='line'>systemctl list-unit-files --type=service |grep enabled |awk '{print $1}' |xargs locate |grep "/usr/lib" >> /tmp/list1
+</span><span class='line'>for i in $(cat /tmp/list1); do printf "\nservice $i\n" >> /tmp/list2; rpm -qif $i >> /tmp/list2; done
+</span><span class='line'>less /tmp/list2
+</span><span class='line'>
+</span><span class='line'>NOTE: Yea I could do this all in 1 long command, but this is easier to
+</span><span class='line'>understand for the sake of anyone who might read this. :)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above should give you a nice txt file that will show the systemctl file,
+and the rpm information about that rpm, for each enabled service.</p>
+
+<p>I&#8217;m a big fan of disabling what I don&#8217;t need.</p>
+
+<p>NOTE: You may need some of these services, I don&#8217;t.</p>
+
+<p>So looks like I&#8217;m disabling:</p>
+
+<pre><code>atd : the AT Daemon, I never use it. I don't know anyone that does anymore.
+bluetooth : not using any bluetooth devices
+cups : never will print from here
+libvirtd : have a different box for virtual machine playtime.
+rpcbind : not using nfs
+spice-vdagentd : not using spice / libvirtd
+avahi : don't want this service
+ksm : not using qemu/libvirt
+ksm-tuned : not using qemu/libvirt
+rngd : don't have a hardware rng device
+sendmail : eww. removing sendmail installing postfix.
+sm-client : part of sendmail
+systemd-readahead-collect.service : readahead is not needed for ssd drives imo
+systemd-readahead-drop.service : disabling readahead
+systemd-readahead-replay.service : disabling readahead
+</code></pre>
+
+<p>Next take a look at the sockets:</p>
+
+<pre><code>systemctl | grep socket
+
+avahi-daemon.socket
+cups.socket
+pcscd.socket
+rpcbind.socket
+</code></pre>
+
+<p>Going to make a quick file to speed up stopping and disabling everything:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vi /tmp/disableme
+</span><span class='line'>atd.service
+</span><span class='line'>bluetooth.service
+</span><span class='line'>cups.service
+</span><span class='line'>libvirtd.service
+</span><span class='line'>rpcbind.service
+</span><span class='line'>spice-vdagentd.service
+</span><span class='line'>avahi-daemon.service
+</span><span class='line'>ksm.service
+</span><span class='line'>ksmtuned.service
+</span><span class='line'>rngd.service
+</span><span class='line'>sendmail.service
+</span><span class='line'>sm-client.service
+</span><span class='line'>systemd-readahead-collect.service
+</span><span class='line'>systemd-readahead-drop.service
+</span><span class='line'>systemd-readahead-replay.service
+</span><span class='line'>avahi-daemon.socket
+</span><span class='line'>cups.socket
+</span><span class='line'>pcscd.socket
+</span><span class='line'>rpcbind.socket
+</span><span class='line'>cups.path
+</span><span class='line'>(save exit)
+</span><span class='line'>
+</span><span class='line'>for i in $(cat /tmp/disableme); do systemctl stop $i; systemctl disable $i; done
+</span><span class='line'>
+</span><span class='line'>When I did this, I got:
+</span><span class='line'>    Warning: Stopping cups.service, but it can still be activated by:
+</span><span class='line'>    cups.path
+</span><span class='line'>
+</span><span class='line'>so I did a plain 'systemctl' and went through everything. cups.path is all I
+</span><span class='line'>want to get rid of, so I added it to the list.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are still some services that live in chkconfig, let&#8217;s see:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chkconfig --list
+</span><span class='line'>
+</span><span class='line'>ebtables        0:off   1:off   2:off   3:off   4:off   5:off   6:off
+</span><span class='line'>iprdump         0:off   1:off   2:on    3:on    4:on    5:on    6:off
+</span><span class='line'>iprinit         0:off   1:off   2:on    3:on    4:on    5:on    6:off
+</span><span class='line'>iprupdate       0:off   1:off   2:on    3:on    4:on    5:on    6:off
+</span><span class='line'>iscsi           0:off   1:off   2:off   3:on    4:on    5:on    6:off
+</span><span class='line'>iscsid          0:off   1:off   2:off   3:on    4:on    5:on    6:off
+</span><span class='line'>netconsole      0:off   1:off   2:off   3:off   4:off   5:off   6:off
+</span><span class='line'>network         0:off   1:off   2:off   3:off   4:off   5:off   6:off</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I don&#8217;t have any ibm power raid devices so the ipr stuff can go. I don&#8217;t have
+any iscsi gear at home so that can all go as well.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chkconfig iprdump off && service iprdump stop
+</span><span class='line'>chkconfig iprinit off && service iprinit stop
+</span><span class='line'>chkconfig iprupdate off && service iprupdate stop
+</span><span class='line'>chkconfig iscsi off && service iscsi stop
+</span><span class='line'>chkconfig iscsid off && service iscsid stop</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay, that&#8217;s better. Let&#8217;s check xinetd:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grep -ir disable /etc/xinetd.d/
+</span><span class='line'>/etc/xinetd.d/rsync:    disable = yes</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nothing to worry about there. Let&#8217;s check the cron jobs.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ls /etc/cron\*
+</span><span class='line'>/etc/cron.deny  /etc/crontab
+</span><span class='line'>
+</span><span class='line'>/etc/cron.d:
+</span><span class='line'>0hourly  raid-check  sysstat  vnstat
+</span><span class='line'>
+</span><span class='line'>/etc/cron.daily:
+</span><span class='line'>cups  hplip logrotate  man-db.cron  mlocate.cron  prelink  tmpwatch
+</span><span class='line'>
+</span><span class='line'>/etc/cron.hourly:
+</span><span class='line'>0anacron  mcelog.cron
+</span><span class='line'>
+</span><span class='line'>/etc/cron.monthly:
+</span><span class='line'>
+</span><span class='line'>/etc/cron.weekly:
+</span><span class='line'>
+</span><span class='line'>cat /etc/crontab
+</span><span class='line'>(no jobs here)
+</span><span class='line'>
+</span><span class='line'>Well. don't want about hplib and cups, but cups is a part of lsb, so not point
+</span><span class='line'>in getting rid if it (a yum remove cups would uninstall half your os).
+</span><span class='line'>
+</span><span class='line'>yum remove hplip
+</span><span class='line'>
+</span><span class='line'>The file for cups is just a tmpwatch so I'll leave it alone.</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Misc</h3>
+
+<p><strong>Utils</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum install htop iotop sysstat vnstat keepassx</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>htop is a fancier top
+iotop is for tracking down IO issues
+sysstat is for sar/iostat/mpstat/etc
+vnstat is for network card monitoring
+keepassx is a password manager
+</code></pre>
+
+<p><strong>random</strong></p>
+
+<p>I setup my prompt_command so that it flushes my history after every single
+command. I also like to setup a much larger history file. I have a fairly fancy
+prompt_command setup but I&#8217;ll talk about that another time.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vi /etc/profile.d/histfile.sh
+</span><span class='line'>export HISTSIZE=9999
+</span><span class='line'>export HISTFILESIZE=999999
+</span><span class='line'>export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'history -a'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I will be putting all my dot files on github, I just haven&#8217;t got around to it
+yet. Need to clean a few things up first. :)</p>
+
+<p><strong>Fonts</strong></p>
+
+<p>I am a big fan of dejavu-sans-mono for terminals / programming, which fedora
+has default installed now. Just need to change the system monospaced font to
+it. <a href="http://www.google.com/webfonts/specimen/Droid+Sans+Mono">Droid sans mono</a>
+is really nice as well.</p>
+
+<h3>Closing</h3>
+
+<p>Having been using Fedora 18 for about a week now, I&#8217;m pretty happy with it. I
+will be upgrading my laptop and work desktop in the next week or two, so I can
+get MATE on everything.</p>
+
+<p>There is a lot of complaints about fedora 18, people are bitching about the
+gnome3 changes, I am not sure what they are talking about; I used gnome 3 long
+enough to install mate. :)</p>
+
+<p>Gnome 3 is now the internet explorer of desktop environments.</p>
+
+<p>The new anaconda is immature, there is no question. But it&#8217;s all python based,
+so I think it will evolve quickly to support what the old anaconda could do.</p>
+
+<p>As far as Fedora being <a href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTI4MjI">the worst redhat
+distro</a> I have to
+disagree. RedHat linux 6 in 1998 or so (not to be confused with redhat
+enterprise linux) had a broken dhcp implementation, a grub bug where if you
+pushed a key to boot (the booting linux in 3 seconds bit), it would only use
+your first 4 partitions on your disk and ignore any other ones, and so many
+other horrible bugs. Redhat linux 5 was so much better. Seemed like a giant
+step backwards at the time (or was it from 6 to 7? hrm. maybe. it was 12-13 years
+ago it&#8217;s a bit fuzzy and so not worth googling).</p>
+
+<p>That&#8217;s all for now.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[My first LISA conference]]></title>

@@ -2,26 +2,30 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://shawn-sterling.github.com/blog/2012/10/14/test-goes-here/</loc>
-        <lastmod>2012-10-21T21:59:22-07:00</lastmod>
+        <lastmod>2013-02-11T23:58:33-08:00</lastmod>
     </url>
     <url>
         <loc>http://shawn-sterling.github.com/blog/2012/10/16/dells-dset-an-analysis/</loc>
-        <lastmod>2012-10-21T23:38:22-07:00</lastmod>
+        <lastmod>2013-02-11T23:58:33-08:00</lastmod>
     </url>
     <url>
         <loc>http://shawn-sterling.github.com/blog/2012/12/16/my-first-lisa-conference/</loc>
-        <lastmod>2012-12-17T00:47:43-08:00</lastmod>
+        <lastmod>2013-02-11T23:58:33-08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://shawn-sterling.github.com/blog/2013/02/12/fedora-18-installation-notes/</loc>
+        <lastmod>2013-02-17T23:37:47-08:00</lastmod>
     </url>
     <url>
         <loc>http://shawn-sterling.github.com/blog/archives/</loc>
-        <lastmod>2012-12-17T00:47:43-08:00</lastmod>
+        <lastmod>2013-02-17T23:37:47-08:00</lastmod>
     </url>
     <url>
         <loc>http://shawn-sterling.github.com/</loc>
-        <lastmod>2012-12-17T00:47:43-08:00</lastmod>
+        <lastmod>2013-02-17T23:37:47-08:00</lastmod>
     </url>
     <url>
         <loc>http://shawn-sterling.github.com/about/</loc>
-        <lastmod>2012-10-21T23:36:44-07:00</lastmod>
+        <lastmod>2013-02-11T23:58:32-08:00</lastmod>
     </url>
 </urlset>
