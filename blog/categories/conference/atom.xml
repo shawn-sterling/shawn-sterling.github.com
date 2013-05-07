@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: conference | system templar]]></title>
+  <link href="http://shawn-sterling.github.com/blog/categories/conference/atom.xml" rel="self"/>
+  <link href="http://shawn-sterling.github.com/"/>
+  <updated>2013-05-06T22:41:13-07:00</updated>
+  <id>http://shawn-sterling.github.com/</id>
+  <author>
+    <name><![CDATA[shawn sterling]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linuxfest 2013]]></title>
+    <link href="http://shawn-sterling.github.com/blog/2013/05/04/linuxfest-2013/"/>
+    <updated>2013-05-04T13:02:00-07:00</updated>
+    <id>http://shawn-sterling.github.com/blog/2013/05/04/linuxfest-2013</id>
+    <content type="html"><![CDATA[<h3>Linuxfest Northwest 2013</h3>
+
+<p>I went to <a href="http://linuxfestnorthwest.org/">Linuxfest Northwest</a> again this
+year, and I had a great time.</p>
+
+<p>This year I organized the <a href="http://linuxfestnorthwest.org/content/lightning-talks">Lightning Talks</a>
+ and plan on doing the lightning talks each year at linuxfest. We had a great
+variety of lightning talks, it was pretty fun.</p>
+
+<p>I also did a session called "I wanna be the guy - The arduous path to senior
+sysadmin or How to be a better system administrator" which you can see here:</p>
+
+<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/bSAgQqa49nM "></iframe></div></p>
+
+<p>It is my first talk at a conference but I hope to do more in the future.</p>
+
+<p>It took a while to get online, as I first did the video with
+<a href="http://www.openshotvideo.com/">openshot</a> but what was on the video preview was
+not what the end video looked like. So I tried to work around it with openshot
+but eventually gave up. Did the same thing uses a friend's copy of
+<a href="http://www.sonycreativesoftware.com/vegassoftware">Vegas</a> and it was a much
+nicer experience. Openshot is <a href="http://www.kickstarter.com/projects/421164014/openshot-video-editor-for-windows-mac-and-linux">working on a new
+UI</a>
+ and I look forward to using it the next time I need to cut some video together.</p>
+
+<h3>The fest</h3>
+
+<p>Linuxfest Northwest 2013 was very fun, I like the sessions and meeting fellow
+linux enthusiasts. I'm more interested in finding other system administrators
+so I am always on the hunt to find them. Maybe I need to do an early birds of a
+feather for sysadmins so I can find out who the sysadmins are nice and early
+and then try to find them through-out the day.</p>
+
+<p>The ID badge for lfnw deserves special mention. I have been to several
+conferences but this was the first that I have been to that had this type of
+badge. The badge was essentially a small booklet, on the front and back was
+your name and information; but inside the booklet was the conference schedule,
+and maps to the various rooms and events going on. This was very cool.</p>
+
+<p>The after party on Saturday was at a museum called <a href="http://www.whatcommuseum.org/about/buildings">The
+lightcatcher</a>. There were several nice exhibits, I liked the
+glass sculptures; but I didn't think to take any pictures
+(which may have not been allowed, I don't remember). I didn't stay very late at
+the after party because I needed to finish up my slides (for the talk i was
+giving the next day).</p>
+
+<p>I look forward to linuxfest 2014.</p>
+]]></content>
+  </entry>
+  
+</feed>
