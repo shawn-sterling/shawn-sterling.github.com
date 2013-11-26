@@ -4,7 +4,7 @@
   <title><![CDATA[system templar]]></title>
   <link href="http://shawn-sterling.github.com/atom.xml" rel="self"/>
   <link href="http://shawn-sterling.github.com/"/>
-  <updated>2013-11-26T05:52:45-08:00</updated>
+  <updated>2013-11-26T05:58:50-08:00</updated>
   <id>http://shawn-sterling.github.com/</id>
   <author>
     <name><![CDATA[shawn sterling]]></name>
@@ -18,8 +18,7 @@
     <link href="http://shawn-sterling.github.com/blog/2013/11/19/my-second-lisa-conference/"/>
     <updated>2013-11-19T22:35:00-08:00</updated>
     <id>http://shawn-sterling.github.com/blog/2013/11/19/my-second-lisa-conference</id>
-    <content type="html"><![CDATA[<p>My second LISA Conference
-Click <a href="http://systemtemplar.org/blog/2012/12/16/my-first-lisa-conference/">here</a> to see my first writeup</p>
+    <content type="html"><![CDATA[<p>Click <a href="http://systemtemplar.org/blog/2012/12/16/my-first-lisa-conference/">here</a> to see my first writeup</p>
 
 <p>Once again I convinced $dayjob to spring for (most of) my trip to <a href="https://www.usenix.org/conference/lisa13">LISA13</a>
 I did a big write up for management last year, and did several training sessions
