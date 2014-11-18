@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting started with FlameGraph - system templar</title>
+  <meta name="author" content="shawn sterling">
+
+  
+  <meta name="description" content="Getting started with Flamegraph Flamegraph is a utility written
+by Brendan Gregg that I have recently used
+a lot of, and I thought I would do a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://shawn-sterling.github.com/blog/2013/11/25/getting-started-with-flamegraph/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="system templar" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35746085-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">system templar</a></h1>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">dot</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">org</a></h1>
+  
+    <h2>a senior sysadmin's blog on /dev/random</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:shawn-sterling.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="/">blog</a></li>
+  <li><a href="/blog/archives">archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">Getting Started With FlameGraph</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-25T22:52:00-08:00" pubdate data-updated="true">Nov 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Getting started with Flamegraph</p>
+
+<p><a href="https://github.com/brendangregg/FlameGraph">Flamegraph</a> is a utility written
+by <a href="http://brendangregg.com/">Brendan Gregg</a> that I have recently used
+a lot of, and I thought I would do a writeup for people who want to get their
+hands dirty. If you don&#8217;t know anything at all about flamegraph I recomend
+watching <a href="https://www.usenix.org/conference/lisa13/technical-sessions/plenary/gregg">this video from LISA13</a>
+or if you just want <a href="http://agentzh.org/misc/slides/yapc-na-2013-flame-graphs/#1">some slides</a> these ones
+are very good.</p>
+
+<p>Flamegraph is visualization graph to help identify what is going on your
+system. Using flamegraph requires a few steps. Let&#8217;s learn by doing.</p>
+
+<p>I am using CentOS 6.4, so my instructions will need to be tweaked for
+Debian/Ubuntu/other users.</p>
+
+<p>We need to get either perf of system tap working on our test machine. Perf is
+easier so we will start with that.</p>
+
+<pre><code>yum install perf
+</code></pre>
+
+<p>Now that perf is installed you could start recoring events now, but if you did
+you would find that all of the symbols would be missing and your flamegraph
+would have a bunch if &#8216;Unknown&#8217; entries in it. To address this we need to
+install debug symbols of the programs we want to debug.</p>
+
+<p>To start off we are going to want at least the kernel and glibc debug packages,
+and after that what debug symbols you want depends on what you are doing. In
+the examples I&#8217;m doing I want to also debug qemu-kvm, so I&#8217;ll be installing
+those symbols.</p>
+
+<p>Installing debuginfo packages for CentOS requires you to <a href="http://wiki.centos.org/AdditionalResources/Repositories/DebugInfo">add the debuginfo
+repo</a> or
+<a href="http://debuginfo.centos.org">download the packages manually</a>. I&#8217;m going with
+the add repo option. Here is what I added:</p>
+
+<pre><code>[debuginfo]
+name=CentOS-$releasever - DebugInfo
+baseurl=http://debuginfo.centos.org/$releasever/$basearch/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+protect=1
+priority=1
+</code></pre>
+
+<p>Just need to install the packages now:</p>
+
+<pre><code>yum install --enablerepo=debuginfo glibc-debuginfo kernel-debuginfo qemu-kvm-debuginfo
+</code></pre>
+
+<p>Now that I have the debug packages installed I&#8217;m ready to start perf.</p>
+
+<pre><code>perf record -a -g -F 997 -o first.perf sleep 60
+</code></pre>
+
+<p>-a = all cpus
+-g = do call-graph (backtrace) recording
+-F = frequency (how often to collect data), which we are setting to 997 instead
+of 1000 based on Brendan&#8217;s advice (watch the video).
+-o = output file name. By default it will record to a file called perf.record,
+and it will get confusing when you are doing a lot of perf recording.
+sleep 60 = perf can record events for any command you do, in this case we don&#8217;t
+care about what we are doing, we are recording events on all cpus. So here we
+are just saying we want to record for 60 seconds.</p>
+
+<ul>
+<li>NOTE: 60 seconds can be 50-100 mb or more depending on how busy your system
+is.</li>
+</ul>
+
+
+<p>Next we want to convert the perf file (which is a binary file) into a text file so we can process it
+with flamegraph.</p>
+
+<pre><code>perf script -i first.perf &gt; first.script
+</code></pre>
+
+<p>Now we have a text file we can work with.</p>
+
+<p>Install flamegraph:</p>
+
+<pre><code>git clone https://github.com/brendangregg/FlameGraph.git
+</code></pre>
+
+<p>Before running flamegraph we need to process the script file into folded
+stacks.</p>
+
+<pre><code>cat first.script | ./stackcollapse-perf.pl &gt; first.folded
+</code></pre>
+
+<p>Lastly we will run flamegraph:</p>
+
+<pre><code>cat first.folded | ./flamegraph.pl &gt; first.svg
+</code></pre>
+
+<p>Now we can look at our pretty svg file!</p>
+
+<p>We can do this all with pipes as well. So instead:</p>
+
+<pre><code>perf script -i first.perf | ./stackcollapse-perf.pl | ./flamegraph.pl &gt; first.svg
+</code></pre>
+
+<p>A <a href="https://github.com/brendangregg/FlameGraph/pull/25">new feature I added</a> for flamegraph is to use a
+consistent palette. Let&#8217;s use this in a practical scenario.</p>
+
+<p>I have 2 servers both running java inside of KVM. One is working great, the
+other is not. On each machine I did a perf record, just like above. I saved the
+files to working.script and broken.script (ran perf record, and perf script on
+each box).</p>
+
+<p>Next I transfered the script files to my workstation, and ran:</p>
+
+<pre><code>cat working.script | ./stackcollapse-perf.pl | ./flamegraph.pl --cp &gt; working.svg
+</code></pre>
+
+<p>the &#8211;cp saves the randomly generated palette into a palette.map file. Then on
+the same workstation I ran</p>
+
+<pre><code>cat broken.script | ./stackcollapse-perf.pl | ./flamegraph.pl --cp --colors mem &gt; broken.svg
+</code></pre>
+
+<p>the &#8211;cp option will use the same palette.map that was generated from the
+previous run of flamegraph. This time we also have &#8211;colors mem, which uses the
+mem palette for any NEW symbols that the previous flamegraph did not have. This
+will make the differences really stand out in our flamegraph. Now a side by
+side comparison shows the problem:</p>
+
+<p>Pretty fun stuff.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">shawn sterling</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-25T22:52:00-08:00" pubdate data-updated="true">Nov 25<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://shawn-sterling.github.com/blog/2013/11/25/getting-started-with-flamegraph/" data-via="" data-counturl="http://shawn-sterling.github.com/blog/2013/11/25/getting-started-with-flamegraph/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2013/11/19/my-second-lisa-conference/" title="Previous Post: My Second LISA Conference">&laquo; My Second LISA Conference</a>
+      
+      
+        <a class="basic-alignment right articlenav" href="/blog/2014/11/17/i-finally-joined-twitter/" title="Next Post: I (finally) joined twitter">I (finally) joined twitter &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/17/i-finally-joined-twitter/">I (finally) joined twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/25/getting-started-with-flamegraph/">Getting started with FlameGraph</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/my-second-lisa-conference/">My Second LISA Conference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/04/linuxfest-2013/">Linuxfest 2013</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/12/fedora-18-installation-notes/">Getting Fedora 18 Desktop ready</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/shawn-sterling">@shawn-sterling</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'shawn-sterling',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - shawn sterling -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'systemtemplar';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://shawn-sterling.github.com/blog/2013/11/25/getting-started-with-flamegraph/';
+        var disqus_url = 'http://shawn-sterling.github.com/blog/2013/11/25/getting-started-with-flamegraph/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

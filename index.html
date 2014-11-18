@@ -9,8 +9,8 @@
   <meta name="author" content="shawn sterling">
 
   
-  <meta name="description" content="Click here to see my first writeup Once again I convinced $dayjob to spring for (most of) my trip to LISA13
-I did a big write up for management last &hellip;">
+  <meta name="description" content="I finally joined twitter. Whilst my little brother has been telling me for years that I should join
+twitter, I have continuously resisted. Here is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,6 +87,237 @@ I did a big write up for management last &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/11/17/i-finally-joined-twitter/">I (Finally) Joined Twitter</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-17T23:27:00-08:00" pubdate data-updated="true">Nov 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I finally joined twitter.</p>
+
+<p>Whilst my little brother has been telling me for years that I should join
+twitter, I have continuously resisted.</p>
+
+<p>Here is the conversation that made me cave:</p>
+
+<p>Me> Twitter is stupid. It&#8217;s just IRC. I&#8217;ve been on IRC for nearly 20 years, and
+I&#8217;m in around 30 channels on 4 servers. Why would I want to subscribe to
+someone and see everything they say for every channel they are in? That&#8217;s crazy
+talk.</p>
+
+<p>X> Okay. Sure. Twitter is just IRC. I get that. So let me ask you this. Are you
+on any IRC channels with Adrian Cockcroft? Brendan Gregg? John Allspaw?</p>
+
+<p>Me> Well.. no.</p>
+
+<p>X> Would you like to be?</p>
+
+<p>Me> Well.. yes.</p>
+
+<p>So here I am: <a href="https://twitter.com/systemtemplar">@systemtemplar</a>. I&#8217;m still
+learning the ropes.</p>
+
+<p>Also I&#8217;m planning on updating this webpage a bit more often that twice a year,
+so we&#8217;ll see how that goes. I have another LISA writeup that I&#8217;m working on. So
+there will be at least that. :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/11/25/getting-started-with-flamegraph/">Getting Started With FlameGraph</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-25T22:52:00-08:00" pubdate data-updated="true">Nov 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Getting started with Flamegraph</p>
+
+<p><a href="https://github.com/brendangregg/FlameGraph">Flamegraph</a> is a utility written
+by <a href="http://brendangregg.com/">Brendan Gregg</a> that I have recently used
+a lot of, and I thought I would do a writeup for people who want to get their
+hands dirty. If you don&#8217;t know anything at all about flamegraph I recomend
+watching <a href="https://www.usenix.org/conference/lisa13/technical-sessions/plenary/gregg">this video from LISA13</a>
+or if you just want <a href="http://agentzh.org/misc/slides/yapc-na-2013-flame-graphs/#1">some slides</a> these ones
+are very good.</p>
+
+<p>Flamegraph is visualization graph to help identify what is going on your
+system. Using flamegraph requires a few steps. Let&#8217;s learn by doing.</p>
+
+<p>I am using CentOS 6.4, so my instructions will need to be tweaked for
+Debian/Ubuntu/other users.</p>
+
+<p>We need to get either perf of system tap working on our test machine. Perf is
+easier so we will start with that.</p>
+
+<pre><code>yum install perf
+</code></pre>
+
+<p>Now that perf is installed you could start recoring events now, but if you did
+you would find that all of the symbols would be missing and your flamegraph
+would have a bunch if &#8216;Unknown&#8217; entries in it. To address this we need to
+install debug symbols of the programs we want to debug.</p>
+
+<p>To start off we are going to want at least the kernel and glibc debug packages,
+and after that what debug symbols you want depends on what you are doing. In
+the examples I&#8217;m doing I want to also debug qemu-kvm, so I&#8217;ll be installing
+those symbols.</p>
+
+<p>Installing debuginfo packages for CentOS requires you to <a href="http://wiki.centos.org/AdditionalResources/Repositories/DebugInfo">add the debuginfo
+repo</a> or
+<a href="http://debuginfo.centos.org">download the packages manually</a>. I&#8217;m going with
+the add repo option. Here is what I added:</p>
+
+<pre><code>[debuginfo]
+name=CentOS-$releasever - DebugInfo
+baseurl=http://debuginfo.centos.org/$releasever/$basearch/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+protect=1
+priority=1
+</code></pre>
+
+<p>Just need to install the packages now:</p>
+
+<pre><code>yum install --enablerepo=debuginfo glibc-debuginfo kernel-debuginfo qemu-kvm-debuginfo
+</code></pre>
+
+<p>Now that I have the debug packages installed I&#8217;m ready to start perf.</p>
+
+<pre><code>perf record -a -g -F 997 -o first.perf sleep 60
+</code></pre>
+
+<p>-a = all cpus
+-g = do call-graph (backtrace) recording
+-F = frequency (how often to collect data), which we are setting to 997 instead
+of 1000 based on Brendan&#8217;s advice (watch the video).
+-o = output file name. By default it will record to a file called perf.record,
+and it will get confusing when you are doing a lot of perf recording.
+sleep 60 = perf can record events for any command you do, in this case we don&#8217;t
+care about what we are doing, we are recording events on all cpus. So here we
+are just saying we want to record for 60 seconds.</p>
+
+<ul>
+<li>NOTE: 60 seconds can be 50-100 mb or more depending on how busy your system
+is.</li>
+</ul>
+
+
+<p>Next we want to convert the perf file (which is a binary file) into a text file so we can process it
+with flamegraph.</p>
+
+<pre><code>perf script -i first.perf &gt; first.script
+</code></pre>
+
+<p>Now we have a text file we can work with.</p>
+
+<p>Install flamegraph:</p>
+
+<pre><code>git clone https://github.com/brendangregg/FlameGraph.git
+</code></pre>
+
+<p>Before running flamegraph we need to process the script file into folded
+stacks.</p>
+
+<pre><code>cat first.script | ./stackcollapse-perf.pl &gt; first.folded
+</code></pre>
+
+<p>Lastly we will run flamegraph:</p>
+
+<pre><code>cat first.folded | ./flamegraph.pl &gt; first.svg
+</code></pre>
+
+<p>Now we can look at our pretty svg file!</p>
+
+<p>We can do this all with pipes as well. So instead:</p>
+
+<pre><code>perf script -i first.perf | ./stackcollapse-perf.pl | ./flamegraph.pl &gt; first.svg
+</code></pre>
+
+<p>A <a href="https://github.com/brendangregg/FlameGraph/pull/25">new feature I added</a> for flamegraph is to use a
+consistent palette. Let&#8217;s use this in a practical scenario.</p>
+
+<p>I have 2 servers both running java inside of KVM. One is working great, the
+other is not. On each machine I did a perf record, just like above. I saved the
+files to working.script and broken.script (ran perf record, and perf script on
+each box).</p>
+
+<p>Next I transfered the script files to my workstation, and ran:</p>
+
+<pre><code>cat working.script | ./stackcollapse-perf.pl | ./flamegraph.pl --cp &gt; working.svg
+</code></pre>
+
+<p>the &#8211;cp saves the randomly generated palette into a palette.map file. Then on
+the same workstation I ran</p>
+
+<pre><code>cat broken.script | ./stackcollapse-perf.pl | ./flamegraph.pl --cp --colors mem &gt; broken.svg
+</code></pre>
+
+<p>the &#8211;cp option will use the same palette.map that was generated from the
+previous run of flamegraph. This time we also have &#8211;colors mem, which uses the
+mem palette for any NEW symbols that the previous flamegraph did not have. This
+will make the differences really stand out in our flamegraph. Now a side by
+side comparison shows the problem:</p>
+
+<p>Pretty fun stuff.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1770,6 +2001,14 @@ connected usb devices
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/17/i-finally-joined-twitter/">I (finally) joined twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/25/getting-started-with-flamegraph/">Getting started with FlameGraph</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/11/19/my-second-lisa-conference/">My Second LISA Conference</a>
       </li>
     
@@ -1779,14 +2018,6 @@ connected usb devices
     
       <li class="post">
         <a href="/blog/2013/02/12/fedora-18-installation-notes/">Getting Fedora 18 Desktop ready</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/12/16/my-first-lisa-conference/">My first LISA conference</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/16/dells-dset-an-analysis/">An analysis on dell&#8217;s dset tool</a>
       </li>
     
   </ul>
@@ -1832,7 +2063,7 @@ connected usb devices
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - shawn sterling -
+  Copyright &copy; 2014 - shawn sterling -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
