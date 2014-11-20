@@ -4,7 +4,7 @@
   <title><![CDATA[system templar]]></title>
   <link href="http://shawn-sterling.github.com/atom.xml" rel="self"/>
   <link href="http://shawn-sterling.github.com/"/>
-  <updated>2014-11-17T23:35:22-08:00</updated>
+  <updated>2014-11-19T23:05:48-08:00</updated>
   <id>http://shawn-sterling.github.com/</id>
   <author>
     <name><![CDATA[shawn sterling]]></name>
@@ -12,6 +12,178 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[LISA Round 3]]></title>
+    <link href="http://shawn-sterling.github.com/blog/2014/11/19/lisa-round-3/"/>
+    <updated>2014-11-19T23:05:00-08:00</updated>
+    <id>http://shawn-sterling.github.com/blog/2014/11/19/lisa-round-3</id>
+    <content type="html"><![CDATA[<h3>LISA the Third</h3>
+
+<p>$dayjob sent me to LISA again, for which I am quite grateful. It almost didn&#8217;t
+happen due to me moving to another business unit (read: promotion) a few weeks
+before the conference, but my new manager was able to pull some strings and
+make it happen (Thank you Brent!).</p>
+
+<h3>The Training</h3>
+
+<p>Like every year I showed up on the Monday, so I could get settled and do 1 day of
+training on the Tuesday and then 3 days of sessions.</p>
+
+<p>The training on Tuesday was not a great selection in my opinion, there were too
+many full day training sessions which didn&#8217;t allow for a lot of choice. Of the
+remaining choices, one of the courses I had taken 2 years ago, so my choice was
+even further restricted. I ended up taking &#8220;Build a Sysadmin Sandbox&#8221; as the
+first course and wasn&#8217;t really getting anything out of it, so I bailed and went
+to puppetcamp which was also occurring on the same day. It was good course but
+the material wasn&#8217;t anything I didn&#8217;t already know.</p>
+
+<p>Puppetcamp was very packed, but I was interested to see Garrett Honeycutt speak,
+as I do use a few of his modules and he is well known in the puppet community.</p>
+
+<p>After that particular session I decided to just do the hallway track until my
+second training session.</p>
+
+<p>The second training session was an introduction to Go for systems programming.
+I have heard a lot of hubub about Go, and was interested to see if the
+training/trainer could convince me that it was a good idea to stop using python
+and start using go. Long story short, I remain unconvinced that it would be a
+good idea to move from python to go for sysadmin type scripts. However if you
+need to worry about multithreading / multiprocessing then it would be a good
+idea to use go (go with go?). The material was good and the trainer did a good
+job; it&#8217;s just that according to me, go adds a bit of complexity that you don&#8217;t
+need to worry about in python. I do have a freakishly long python script that
+is multiprocess that would be fun to rewrite in go, but that project won&#8217;t see
+the light of day for years. :)</p>
+
+<p>Tuesday night we headed out to the <a href="http://taphousegrill.com/index.html">Taphouse</a> with a fairly large (18ish) group
+to socialize and swap stories. It was pretty fun and right across the street
+from the conference hotel.</p>
+
+<h3>The Sessions</h3>
+
+<p>My favorite sessions were:</p>
+
+<p><a href="https://twitter.com/brendangregg">Brendan Gregg&#8217;s</a> <a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/gregg">Linux Performance Analysis: New Tools and Old Secrets</a>
+was fantastic. Only 8 people in the audience had heard of Ftrace, I was not one
+of them. I have already downloaded
+<a href="https://github.com/brendangregg/perf-tools">perf-tools</a> and am likely to
+deploy this to all systems.</p>
+
+<p><a href="https://plus.google.com/115168798285566277428/posts">Brian Atkisson&#8217;s</a> <a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/atkisson">Open Source Identity Management in the Enterprise</a>
+was a very good talk, with the right amount of complexity. This is the exact
+type of talk I&#8217;ve come to expect at LISA. Worth a watch if you are doing
+anything related to identity management.</p>
+
+<p>I missed the first 10 minutes, but <a href="https://twitter.com/benr">Ben Rockwood</a> had a very good session called
+<a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/rockwood">I am SysAdmin (And So Can You)</a>.</p>
+
+<p><a href="https://twitter.com/uphillian">Thomas Uphill</a> had a puppet session called
+<a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/uphill">Puppet for the Enterprise</a> that I went to that
+was good, but either the crowd didn&#8217;t want to participate or the level of
+puppet knowledge in the crowd was very very new. I didn&#8217;t realize before
+attending that he wrote <a href="http://www.amazon.com/dp/1783982187/?tag=packtpubli-20">Mastering puppet</a>. I read the book shortly after it
+came out and do recommend it. I had some conversations Thomas later at the <a href="http://www.empmuseum.org/">EMP museum</a> about workflows with large teams and he seams to think we are doing
+everything right but I have issues with the current workflow that I don&#8217;t like.
+I believe I have a solution but I&#8217;ll save that for another blog post.</p>
+
+<h3>Birds of a feather</h3>
+
+<p>The birds of a feather were quite good.</p>
+
+<p><img src="http://shawn-sterling.github.com/images/bof-2014-1.jpg" title="Bof Board 1" >
+<img src="http://shawn-sterling.github.com/images/bof-2014-2.jpg" title="Bof Board 2" ></p>
+
+<p>There was also 1 BOF on Thursday, which I ran. Didn&#8217;t take a picture of the
+board, as there was only one (Besides the Google BOF).</p>
+
+<p>I stole the idea from LISA 2012, and hosted the BOF &#8220;I&#8217;ve made a huge mistake&#8221;.
+Due to scheduling I had to have this during the Google BOF, so I didn&#8217;t really
+think many people were going to show up. Much to my surprise, so many people
+showed up we had to move to a bigger room. I should have taken a picture but
+totally didn&#8217;t. We moved to a larger room and everyone shared stories of their
+epic failures. Some of the stories were really hilarious.</p>
+
+<p>Other than my own BOF, I liked the RedHat and Puppet vendor BOFs. There was
+also a Infrastructure Testing BOF that had me take several notes.</p>
+
+<h3>Random</h3>
+
+<p>Every LISA that I have been to so far, there has been an event that &#8220;paid for
+the conference&#8221;. And sometimes you don&#8217;t know when that will occur. For
+example, last year the flamegraph talks paid for the conference, as I have
+used that knowledge to solve several problems that would have taken weeks of
+man hours if I had not. Then months later we were looking for a Sunray
+replacement, and I remembered a hallway track conversation that I had with
+<a href="https://twitter.com/oetiker">Tobi Oetiker</a> about what he was doing with Sunrays, and I was able to suggest
+that we test that product. No-one in my organization had heard of that product
+it wasn&#8217;t even in our eval radar. Adding that product to our eval and having us
+use it will have saved the company the price of the conference several times
+over.</p>
+
+<p>This year, Brendan Gregg&#8217;s talk paid for the conference. I&#8217;m working on a few
+other ideas inspired by the conference that may pay for the conference several
+times over. I am always very invigorated after a good conference, I think I
+will be realizing additional value of the conference for quite some time.</p>
+
+<p>I got to meet <a href="https://twitter.com/DaveJosephsen">Dave Josephson</a> from <a href="https://www.librato.com/">Librato</a> who recently collaborated with
+me on <a href="https://github.com/shawn-sterling/graphios">graphios</a> to add librato and statsd support. We had some
+excellent conversations and from those conversations I will be making some
+changes to what I am monitoring to try and preserve the interesting data
+without having to keep my data forever. Dave also did 2 talks at the Nagios
+world conference that mention graphios <a href="http://t.co/CM3wv8utga">here</a> and <a href="http://t.co/QcexgXMyuP">here</a>. Not to mention he
+did two talks at LISA
+<a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/josephsen2">here</a> and <a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/josephsen">here</a>. I caught the second talk at LISA
+and I quite enjoyed it.</p>
+
+<h3>Notes for future first timers</h3>
+
+<ul>
+<li>Wear your badge from the beginning of the day until the end of the day.
+Otherwise people aren&#8217;t going to know that you are an attendee. Wearing the
+badge makes you approachable for hallway track conversations.</li>
+<li>If you get a table for breakfast or dinner in the hotel, get a larger table and
+tell the greeter to send other attendees your way. (You may want to check if someone else is
+already doing this!).</li>
+<li>Do a write up for your manager / coworkers when the whole thing is over. You need to pass on what you
+learned at the conference, and thank your manager for the opportunity of
+going. Your goal should be to prove that the company spent money wisely when
+they opted to send you there, and have justification for sending you again.</li>
+<li>Do 1 day of training, so you can get all the training material.</li>
+<li>If you aren&#8217;t sick of chatting with people, wear your LISA shirt at the
+airport. I had some excellent airport conversations, with other attendees
+because they recognized my shirt.</li>
+</ul>
+
+
+<h3>Random Notes I took</h3>
+
+<ul>
+<li>Read book <a href="http://www.amazon.com/Inspired-Create-Products-Customers-Love/dp/0981690408">Inspired</a></li>
+<li>Read book <a href="http://www.amazon.com/Remote-Office-Not-Required/dp/0804137501">Remote</a></li>
+<li>Read book <a href="http://www.amazon.com/Quantum-Thief-Jean-Flambeur-Book-ebook/dp/B004ULPVN6">The quantum thief</a></li>
+<li>Watch documentary <a href="https://www.youtube.com/watch?v=I1UDS2kgqY8">Jiro Dreams of sushi</a></li>
+<li>Look into <a href="https://github.com/sstephenson/bats">bats</a> (bash automated test system)</li>
+<li>Look into <a href="http://nats.io/">nats.io</a> apparently beats the pants off zeromq and rabbit written in go</li>
+<li>Look into <a href="https://github.com/graphite-ng/graphite-ng">graphite-ng</a></li>
+<li><a href="https://github.com/test-kitchen/test-kitchen">Testkitchen</a> apparently works for puppet</li>
+<li>Several people told me to use <a href="http://cassandra.apache.org/">Cassandra</a> instead of <a href="http://opentsdb.net/">Opentsdb</a></li>
+<li>Have project managers do 15 minute hipchat meetings instead of 30 minute conference calls (This is amazing)</li>
+<li>Make sure the CA root is kept offline on a usb key or whatever (This is likely already done in my org).</li>
+<li>Watch British TV show <a href="http://en.wikipedia.org/wiki/A_Touch_of_Cloth">A touch of cloth</a></li>
+<li>Check out paper on <a href="https://www.usenix.org/conference/lisa14/conference-program/presentation/deri-luca">ntopng</a></li>
+<li>Lots of <a href="http://zookeeper.apache.org/">zookeeper</a> haters / badmouthing</li>
+<li>Facebook&#8217;s Opencompute datacenter is 38% more energy efficient, at 24% less
+cost (energy cost). If this was the only benefit it would be worth looking into, but there
+is so much more.</li>
+</ul>
+
+
+<h3>Final Thoughts</h3>
+
+<p>I had a great time at LISA, and look forward to attending again next year.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[I (finally) joined twitter]]></title>

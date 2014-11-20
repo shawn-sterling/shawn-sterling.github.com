@@ -4,7 +4,7 @@
   <title><![CDATA[Category: conference | system templar]]></title>
   <link href="http://shawn-sterling.github.com/blog/categories/conference/atom.xml" rel="self"/>
   <link href="http://shawn-sterling.github.com/"/>
-  <updated>2014-11-17T23:35:23-08:00</updated>
+  <updated>2014-11-19T23:05:48-08:00</updated>
   <id>http://shawn-sterling.github.com/</id>
   <author>
     <name><![CDATA[shawn sterling]]></name>
@@ -30,7 +30,7 @@ variety of lightning talks, it was pretty fun.</p>
 <p>I also did a session called "I wanna be the guy - The arduous path to senior
 sysadmin or How to be a better system administrator" which you can see here:</p>
 
-<p>{% youtube bSAgQqa49nM %}</p>
+<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/bSAgQqa49nM "></iframe></div></p>
 
 <p>It is my first talk at a conference but I hope to do more in the future.</p>
 
