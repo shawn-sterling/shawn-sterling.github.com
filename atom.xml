@@ -4,7 +4,7 @@
   <title><![CDATA[system templar]]></title>
   <link href="http://shawn-sterling.github.com/atom.xml" rel="self"/>
   <link href="http://shawn-sterling.github.com/"/>
-  <updated>2014-11-19T23:05:48-08:00</updated>
+  <updated>2015-04-08T00:00:28-07:00</updated>
   <id>http://shawn-sterling.github.com/</id>
   <author>
     <name><![CDATA[shawn sterling]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with Flamegraph]]></title>
+    <link href="http://shawn-sterling.github.com/blog/2015/04/07/getting-started-with-flamegraph/"/>
+    <updated>2015-04-07T23:41:00-07:00</updated>
+    <id>http://shawn-sterling.github.com/blog/2015/04/07/getting-started-with-flamegraph</id>
+    <content type="html"><![CDATA[<h3>Linuxfest Northwest 2014</h3>
+
+<p>I went to <a href="http://linuxfestnorthwest.org/">Linuxfest Northwest</a> again in 2014
+and did another talk, this time on <a href="https://github.com/brendangregg/FlameGraph">Flamegraph</a>.</p>
+
+<p>I&#8217;m posting the video nearly a year late, because I finally got around to
+editing it.</p>
+
+<p>My excuses are:</p>
+
+<ul>
+<li>I have a son who turns 2 next week, and I&#8217;m in the parental time warp.</li>
+<li>I had to re-create parts in the video (the flamegraph demo parts) and it
+seamed like a daunting task but turned out to be very simple.</li>
+<li>I&#8217;m a sysadmin not a video editor. All my future videos where I have to
+do the editing will be in a much simpler format. :)</li>
+</ul>
+
+
+<p>Here&#8217;s the video.</p>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/t1G2Fr0yDg0 "></iframe></div>
+
+
+<p>And the <a href="https://speakerdeck.com/shawnsterling/flamegraph-what-you-need-to-know-to-get-started">slides</a> (which these I posted the day after I presented).</p>
+
+<p>Flamegraph has had some very cool changes since this video, and you can now use
+Flamegraph on your python scripts via <a href="https://github.com/bdarnell/plop">plop</a>.</p>
+
+<p>Linuxfest 2015 is right around the corner, but I&#8217;m not doing a talk this year
+due to time constraints. :(</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[LISA Round 3]]></title>
